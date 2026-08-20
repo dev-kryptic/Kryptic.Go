@@ -1,11 +1,11 @@
-// Package krypticdev is the Kryptic Go SDK. During development startup,
+// Package kryptic is the Kryptic daemon client for Go. During development startup,
 // Inject fetches the current project's secrets from the local Kryptic daemon
 // and sets them as environment variables. Outside development it is a no-op.
-// It never panics — a missing daemon means the application simply starts with
+// It never panics, a missing daemon means the application simply starts with
 // the environment it already has.
 //
 // Protocol: daemon/PROTOCOL.md v1 (newline-delimited JSON over a local socket).
-package krypticdev
+package kryptic
 
 import (
 	"encoding/json"
@@ -57,7 +57,7 @@ func Inject() Result {
 		projectID = config.ProjectID
 	}
 	if projectID == "" {
-		warn("no kryptic.json found (and no KRYPTIC_PROJECT_ID set) — nothing to inject.")
+		warn("no kryptic.json found (and no KRYPTIC_PROJECT_ID set) - nothing to inject.")
 		return Result{Skipped: true, Reason: "no_project"}
 	}
 
@@ -71,7 +71,7 @@ func Inject() Result {
 
 	response, err := request(projectID, environment)
 	if err != nil {
-		warn(fmt.Sprintf("daemon not reachable (%v) — continuing without injected secrets.", err))
+		warn(fmt.Sprintf("daemon not reachable (%v) - continuing without injected secrets.", err))
 		return Result{Skipped: true, Reason: "daemon_unreachable"}
 	}
 
@@ -149,7 +149,7 @@ func findKrypticJSON() *krypticJSON {
 			if json.Unmarshal(data, &config) == nil {
 				return &config
 			}
-			warn("could not parse " + candidate + " — ignoring it.")
+			warn("could not parse " + candidate + " - ignoring it.")
 			return nil
 		}
 		parent := filepath.Dir(directory)

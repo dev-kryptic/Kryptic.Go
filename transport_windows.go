@@ -1,6 +1,6 @@
 //go:build windows
 
-package krypticdev
+package kryptic
 
 import (
 	"bufio"
@@ -21,10 +21,10 @@ func socketPath() string {
 // roundTrip writes one NDJSON request line to the daemon and reads the one
 // response line back.
 //
-// The daemon serves a byte-mode named pipe, so a plain file handle works — no
+// The daemon serves a byte-mode named pipe, so a plain file handle works; no
 // win32 bindings and no dependency for consumers. The timeout covers connecting
 // (the pipe can briefly report "busy" between served clients); the read then
-// blocks until the daemon replies, which it does immediately or not at all —
+// blocks until the daemon replies, which it does immediately or not at all;
 // matching the .NET client's semantics. A KRYPTIC_SOCKET_PATH override that is
 // not a pipe path (tests use unix sockets) is dialed as a unix socket, which
 // Windows supports natively.

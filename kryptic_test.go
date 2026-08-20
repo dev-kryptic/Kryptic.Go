@@ -1,4 +1,4 @@
-package krypticdev
+package kryptic
 
 // Tests run against a mock daemon: a unix-socket listener speaking PROTOCOL.md v1.
 

@@ -1,14 +1,14 @@
-# krypticdev
+# kryptic (Go daemon client)
 
 ```bash
-go get github.com/dev-kryptic/krypticdev
+go get github.com/dev-kryptic/Kryptic.Go
 ```
 
 ```go
-import "github.com/dev-kryptic/krypticdev"
+import "github.com/dev-kryptic/Kryptic.Go"
 
 func main() {
-    krypticdev.Inject() // populates the process environment in development
+    kryptic.Inject() // populates the process environment in development
     // ... rest of application
 }
 ```
