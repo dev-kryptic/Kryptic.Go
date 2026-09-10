@@ -20,7 +20,12 @@ func socketPath() string {
 			return filepath.Join(runtimeDir, "kryptic-daemon.sock")
 		}
 	}
-	return "/tmp/kryptic-daemon.sock"
+	// Same per-user directory the daemon listens on (PROTOCOL.md). Never /tmp.
+	dir, err := os.UserConfigDir()
+	if err != nil {
+		return ""
+	}
+	return filepath.Join(dir, "kryptic", "kryptic-daemon.sock")
 }
 
 // roundTrip writes one NDJSON request line to the daemon socket and reads the
